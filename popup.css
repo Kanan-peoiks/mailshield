@@ -1,0 +1,198 @@
+:root {
+    --bg: #0b1220;
+    --card: #121a2b;
+    --text: #e9eefc;
+    --muted: #a9b4d0;
+    --line: rgba(255,255,255,0.12);
+    /* Gauge colors by level */
+    --gauge-low: #22c55e;
+    --gauge-medium: #f97316;
+    --gauge-high: #ef4444;
+    --gauge-track: rgba(255,255,255,0.1);
+    --gauge-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    background: var(--bg);
+    color: var(--text);
+    width: 360px;
+  }
+  
+  .wrap { padding: 12px; }
+  
+  header { margin-bottom: 10px; }
+  .title { font-size: 15px; font-weight: 700; }
+  .subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  
+  .btn {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: #1b2a46;
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 650;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.secondary { background: transparent; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  
+  .status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: rgba(255,255,255,0.03);
+  }
+  
+  .card {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+  
+  .hidden { display: none; }
+
+  /* --- Risk Score Gauge --- */
+  .gauge-section {
+    margin-bottom: 4px;
+  }
+  .gauge-section.hidden {
+    display: none;
+  }
+  .gauge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .gauge-ring-wrap {
+    position: relative;
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+  }
+  .gauge-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* 0 at top */
+    filter: drop-shadow(var(--gauge-shadow));
+  }
+  .gauge-bg {
+    fill: none;
+    stroke: var(--gauge-track);
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+  .gauge-progress {
+    fill: none;
+    stroke: var(--gauge-color, var(--gauge-low));
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: var(--gauge-circumference, 0);
+    stroke-dashoffset: var(--gauge-dashoffset, var(--gauge-circumference));
+    transition: stroke-dashoffset 400ms ease-out, stroke 200ms ease-out;
+  }
+  .gauge-score {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .gauge-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--gauge-badge-bg, var(--gauge-low));
+    color: #0b1220;
+  }
+
+  /* --- Risk Bar (horizontal progress) --- */
+  .risk-bar-container {
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+  .risk-bar-container.hidden {
+    display: none;
+  }
+  .risk-bar-track {
+    width: 100%;
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+  .risk-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    min-width: 0;
+  }
+  .risk-bar-fill.risk-low {
+    background: linear-gradient(90deg, #16a34a 0%, #22c55e 50%, #4ade80 100%);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+  }
+  .risk-bar-fill.risk-medium {
+    background: linear-gradient(90deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+  }
+  .risk-bar-fill.risk-high {
+    background: linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
+  }
+  .risk-bar-fill.risk-neutral {
+    background: linear-gradient(90deg, #64748b 0%, #94a3b8 100%);
+    box-shadow: 0 0 8px rgba(148, 163, 184, 0.25);
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin: 0 0 6px;
+    opacity: 0.9;
+  }
+  .risk { font-size: 18px; font-weight: 800; }
+  .scoreBox { text-align: right; }
+  .score { font-size: 18px; font-weight: 800; }
+  
+  .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 10px 0;
+  }
+  
+  .list {
+    margin: 6px 0 0;
+    padding-left: 18px;
+    color: var(--text);
+  }
+  .list li { margin: 6px 0; color: var(--text); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; color: #dbe6ff; }
+  .actions { margin-top: 10px; }
+  .options-link { margin-top: 10px; text-align: center; }
+  .options-link a { font-size: 12px; color: var(--muted); text-decoration: none; }
+  .options-link a:hover { text-decoration: underline; }

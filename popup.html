@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Phishing Mail Detector</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="title">Phishing Mail Detector</div>
+        <div class="subtitle">Gmail opened email scan</div>
+      </header>
+
+      <button id="scanBtn" class="btn">Scan current email</button>
+      <p class="options-link"><a href="#" id="optionsLink">Options</a></p>
+
+      <section id="status" class="status hidden"></section>
+
+      <section id="result" class="card hidden">
+        <!-- Risk Score Gauge: circular ring + center score + level pill -->
+        <div id="gaugeSection" class="gauge-section hidden">
+          <div class="gauge-wrap">
+            <div class="gauge-ring-wrap">
+              <svg class="gauge-svg" viewBox="0 0 100 100" aria-hidden="true">
+                <circle class="gauge-bg" cx="50" cy="50" r="42" />
+                <circle id="gaugeProgress" class="gauge-progress" cx="50" cy="50" r="42" />
+              </svg>
+              <div id="gaugeScore" class="gauge-score">0</div>
+            </div>
+            <span id="gaugeBadge" class="gauge-badge">—</span>
+          </div>
+        </div>
+
+        <div id="risk-bar-container" class="risk-bar-container hidden">
+          <div id="risk-bar-track" class="risk-bar-track">
+            <div id="risk-bar-fill" class="risk-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="label">Why suspicious?</div>
+        <ul id="reasons" class="list"></ul>
+
+        <div class="divider"></div>
+
+        <div class="label">Suspicious URLs</div>
+        <p class="hint">Actual link targets from the email (may differ from visible text).</p>
+        <ul id="links" class="list mono"></ul>
+
+        <div class="actions">
+          <button id="copyBtn" class="btn secondary" disabled>Copy report</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
